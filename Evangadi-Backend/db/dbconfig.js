@@ -1,6 +1,4 @@
 const mysql = require('mysql2');
-
-
 // const app = express();
 
 // Database connection configuration
