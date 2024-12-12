@@ -1,3 +1,4 @@
+
 const dbConnection = require("../db/dbConfig");
 const bcrypt = require("bcrypt");
 const { StatusCodes } = require("http-status-codes");
@@ -51,3 +52,4 @@ async function checkUser(req, res) {
 }
 
 module.exports = { register, login, checkUser };
+
