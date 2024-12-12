@@ -43,11 +43,11 @@ async function login(req, res) {
       .json({ msg: "something went wrong, try again later!" });
   }
 }
-// async function checkUser(req, res) {
-//   const username = req.user.username;
-//   const userid = req.user.userid;
-//   // console.log(userid);
-//   res.status(StatusCodes.OK).json({ msg: "valid user", username, userid });
-// }
+async function checkUser(req, res) {
+  const username = req.user.username;
+  const userid = req.user.userid;
+  // console.log(userid);
+  res.status(StatusCodes.OK).json({ msg: "valid user", username, userid });
+}
 
 module.exports = { register, login, checkUser };
