@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 import StatusCode from "http-status-codes";
 
 //when user send data they will use token to authenticate them
-//and to checkUser by adding to checkUser route
 const authMiddleware = async (req, res, next) => {
   //take token from users (generated token)
   const authHeader = req.headers.authorization;
@@ -15,7 +14,7 @@ const authMiddleware = async (req, res, next) => {
   }
   const token = authHeader.split(" ")[1];
   // console.log(authHeader);
-  // console.log(token);
+
   try {
     const { userName, userId } = jwt.verify(token, process.env.JWT_SECRET);
     //set user with userName & userId
