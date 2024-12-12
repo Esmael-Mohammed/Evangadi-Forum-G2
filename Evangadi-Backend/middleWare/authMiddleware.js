@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
 import StatusCode from "http-status-codes";
+import jwt from "jsonwebtoken";
 
 //when user send data they will use token to authenticate them
 const authMiddleware = async (req, res, next) => {
