@@ -1,25 +1,33 @@
-const { StatusCodes } = require("http-status-codes");
-const jwt = require("jsonwebtoken");
-async function authMiddleware(req, res, next) {
+import StatusCode from "http-status-codes";
+import jwt from "jsonwebtoken";
+
+//when user send data they will use token to authenticate them
+const authMiddleware = async (req, res, next) => {
+  //take token from users (generated token)
   const authHeader = req.headers.authorization;
+  //check if  token is not available
   if (!authHeader || !authHeader.startsWith("Bearer")) {
-    return res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ msg: "Authorized invalide" });
+    return res.status(StatusCode.UNAUTHORIZED).json({
+      success: false,
+      message: "Not Authorized Login again",
+    });
   }
   const token = authHeader.split(" ")[1];
   // console.log(authHeader);
-  // console.log(token);
 
   try {
-    const { username, userid } = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { username, userid };
+    const { userName, userId } = jwt.verify(token, process.env.JWT_SECRET);
+    //set user with userName & userId
+    req.user = { userName, userId };
+    // call callback function to pass the data up on authorization.
     next();
   } catch (error) {
-    return res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ msg: "Authorized invalide" });
+    console.log(error);
+    return res.status(StatusCode.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: "Something went wrong, try again later!",
+    });
   }
-}
+};
 
-module.exports = authMiddleware;
+export default authMiddleware;
