@@ -9,8 +9,10 @@ const dbConnection = mysql.createPool({
     database:process.env.DB_NAME,
     connectionLimit: 10
 });
+// console.log(da);
 
-// Create tables in database
+// // Create tables in database
+
     const user = `CREATE TABLE if not exists users(
         userId INT(20) NOT NULL AUTO_INCREMENT,
         userName VARCHAR(20) NOT NUll,

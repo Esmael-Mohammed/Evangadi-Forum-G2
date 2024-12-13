@@ -1,9 +1,13 @@
 //! Endpoint Implementation:
 // Load the Express framework to handle HTTP requests and responses.
 const express = require("express");
+const {StatusCodes}=require('http-status-codes')
+const crypto=require('crypto')
+const KeywordExtractor = require("keyword-extractor");
 // Initialize App
 const app = express();
 const dbConnection=require('../db/dbconfig');
+
 
 async function postQuestion(req, res) {
     const { title, description } = req.body;
@@ -14,7 +18,15 @@ async function postQuestion(req, res) {
         error: "Please provide all required fields!",
       });
   }
-
+  const generateTag = (title) => {
+    const extractionResult = KeywordExtractor.extract(title, {
+      language: "english",
+      remove_digits: true,
+      return_changed_case: true,
+      remove_duplicates: true,
+    });
+    return extractionResult.length > 0 ? extractionResult[0] : "general";
+  };
 try {
   // get userid from user
   const { userId } = req.user;
@@ -53,8 +65,8 @@ async function getSingleQuestion(req, res) {
   }
   try {
     // Query the database to get the question details
-    const [question] = await dbConnection.execute(
-      "SELECT * FROM questions WHERE questionId = ?",
+    const [question] = await dbConnection.query(
+      "SELECT * FROM questions WHERE questionId =?",
       [questionId])
     
     //  If no question found, return 404
@@ -77,7 +89,7 @@ async function getSingleQuestion(req, res) {
  async function getAllQuestions(req, res) {
    try {
      // Query the database to fetch all questions
-     const [questions] = await db.query("SELECT * FROM questions"); // Fetch data from 'questions' table
+     const [questions] = await dbConnection.query("SELECT * FROM questions"); // Fetch data from 'questions' table
 
      // Send the response JSON payload
      res.status(200).json({

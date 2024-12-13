@@ -1,5 +1,5 @@
-import StatusCode from "http-status-codes";
-import jwt from "jsonwebtoken";
+const {StatusCodes}=require('http-status-codes')
+const jwt=require('jsonwebtoken')
 
 //when user send data they will use token to authenticate them
 const authMiddleware = async (req, res, next) => {
@@ -7,7 +7,7 @@ const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
   //check if  token is not available
   if (!authHeader || !authHeader.startsWith("Bearer")) {
-    return res.status(StatusCode.UNAUTHORIZED).json({
+    return res.status(StatusCodes.UNAUTHORIZED).json({
       success: false,
       message: "Not Authorized Login again",
     });
@@ -30,4 +30,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-export default authMiddleware;
+module.exports= authMiddleware;
