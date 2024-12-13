@@ -1,98 +1,83 @@
-// Import required modules
-const express = require('express');
+const dbConnection = require("../db/dbConfig");
+const express = require("express");
 const router = express.Router();
-const { checkUser } = require('../middleWare/authMiddleware');
+const { v4: uuidv4 } = require('uuid');
 
-// Mock database or data access layer
-const answersDB = [];
-const questionsDB = [];
+const submitQuestion = async (req, res) => {
+  try {
+    const { title, desc, userid } = req.body;
 
-// POST /api/answer - Submit an answer for a specific question
-router.post('/answer', checkUser, (req, res) => {
-    const { questionid, answer } = req.body;
-
-    // Validate request body
-    if (!questionid || typeof questionid !== 'number') {
-        return res.status(400).json({
-            error: 'Bad Request',
-            message: 'Invalid or missing question ID',
-        });
+    if (!title || !desc || !userid) {
+      return res.status(400).json({ message: "Title, description, and user ID are required" });
     }
 
-    if (!answer || typeof answer !== 'string' || !answer.trim()) {
-        return res.status(400).json({
-            error: 'Bad Request',
-            message: 'Please provide answer',
-        });
+    const questionid = uuidv4();
+    
+    const [newQuestion] = await dbConnection.query(
+      "INSERT INTO questions (title, description, questionid, userid) VALUES (?, ?, ?, ?)",
+      [title, desc, questionid, userid]
+    );
+
+    res.status(201).json({
+      message: "Question created successfully",
+      questionid,
+      title,
+      description: desc,
+      userid,
+    });
+  } catch (error) {
+    console.error("Error submitting question:", error);
+    res.status(500).json({ error: "Server error while submitting question." });
+  }
+};
+
+const getAllQuestions = async (req, res) => {
+  try {
+    const sql = `
+      SELECT users.userid, users.username, questions.title, questions.questionid, questions.description
+      FROM users
+      JOIN questions ON users.userid = questions.userid;
+    `;
+
+    const [result] = await dbConnection.query(sql);
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "No questions found." });
     }
 
-    try {
-        // Mock storing the answer (you can replace this with actual DB logic)
-        const newAnswer = {
-            answer_id: answersDB.length + 1,
-            question_id: questionid,
-            content: answer.trim(),
-            user_name: req.user.username,
-            created_at: new Date().toISOString(),
-        };
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error fetching questions:", error);
+    res.status(500).json({ error: "Server error while fetching questions." });
+  }
+};
 
-        answersDB.push(newAnswer);
+const getSingleQuestion = async (req, res) => {
+  try {
+    const { questionid } = req.params;
 
-        // Respond with success
-        res.status(201).json({
-            message: 'Answer posted successfully',
-        });
-    } catch (error) {
-        console.error('Error posting answer:', error);
-        res.status(500).json({
-            error: 'Internal Server Error',
-            message: 'An unexpected error occurred.',
-        });
-    }
-});
+    const sql = `
+      SELECT users.username, questions.title, questions.questionid, questions.description
+      FROM users
+      JOIN questions ON users.userid = questions.userid
+      WHERE questions.questionid = ?;
+    `;
 
-// POST /api/question - Create a new question
-router.post('/question', checkUser, (req, res) => {
-    const { title, description } = req.body;
+    const [result] = await dbConnection.query(sql, [questionid]);
 
-    // Validate request body
-    if (!title || typeof title !== 'string' || !title.trim()) {
-        return res.status(400).json({
-            error: 'Bad Request',
-            message: 'Title is required and must be a non-empty string',
-        });
+    if (result.length === 0) {
+      return res.status(404).json({ message: "Question not found." });
     }
 
-    if (!description || typeof description !== 'string' || !description.trim()) {
-        return res.status(400).json({
-            error: 'Bad Request',
-            message: 'Description is required and must be a non-empty string',
-        });
-    }
+    res.status(200).json(result[0]);
+  } catch (error) {
+    console.error("Error fetching question:", error);
+    res.status(500).json({ error: "Server error while fetching question." });
+  }
+};
 
-    try {
-        // Mock storing the question (you can replace this with actual DB logic)
-        const newQuestion = {
-            question_id: questionsDB.length + 1,
-            title: title.trim(),
-            description: description.trim(),
-            user_name: req.user.username,
-            created_at: new Date().toISOString(),
-        };
-
-        questionsDB.push(newQuestion);
-
-        // Respond with success
-        res.status(201).json({
-            message: 'Question created successfully',
-        });
-    } catch (error) {
-        console.error('Error creating question:', error);
-        res.status(500).json({
-            error: 'Internal Server Error',
-            message: 'An unexpected error occurred.',
-        });
-    }
-});
+router.post("/askquestion", submitQuestion);
+router.get("/getallquestions", getAllQuestions);
+router.get("/questions/:questionid", getSingleQuestion);
 
 module.exports = router;
