@@ -1,15 +1,9 @@
-const express = require("express");
-const app = express();
-const questionRoutes = require("./route/questionRoute");
 
-// Middleware for parsing JSON
-app.use(express.json());
+const express= require ('express');
+const app= express();
+const dbConnection=require('./db/dbconfig')
 
-// Mount the question routes
-app.use("/api", questionRoutes);
+const answerRoutes=require('./route/answerRoute')
 
-// Start the server
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+app.use("api/answer",answerRoutes)
+
