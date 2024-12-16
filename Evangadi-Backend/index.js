@@ -8,6 +8,7 @@ const dbConnection=require('./db/dbconfig')
 const answerRouter=require('./route/answerRoute')
 const  questionRouter  = require("./route/questionRoute");
 const userRouter = require('./route/userRoute')
+app.use(cors())
 // json middleware to extract json data
 app.use(express.json())
 
@@ -16,9 +17,9 @@ app.use("api/answer",answerRouter)
 const port=3003;
 const authMiddleware=require('./middleWare/authMiddleware')
 //user routes middleware
-app.use("/api/user", userRouter);
+app.use("/api/user", userRouter);//http://localhost:3003/api/user/register
 //question routes middleware
-app.use("/api", authMiddleware, questionRouter);
+app.use("/api", authMiddleware, questionRouter);//http://localhost:3003/api/question
 //answer routes middleware
 app.use("/api", authMiddleware, answerRouter);
 //using get http method (to request data from server)
