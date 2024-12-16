@@ -80,4 +80,4 @@ async function logOut(req,res) {
   
 }
 
-module.exports = { register, login, checkUser };
+module.exports = { register, login, checkUser,logOut};
