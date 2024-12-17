@@ -16,7 +16,7 @@ async function postQuestion(req, res) {
     // Check for missing items
     if (!title || !description) {
       return res.status(StatusCodes.BAD_REQUEST).json({
-        error: "Please provide all required fields!",
+        msg: "Please provide all required fields!",
       });
   }
   const generateTag = (title) => {
@@ -44,13 +44,13 @@ try {
   );
 
   return res.status(StatusCodes.CREATED).json({
-    meg: "Question created successfully",
+    msg: "Question created successfully",
   });
   
 } catch (error) {
   console.log(error.message);
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    error: "An unexpected error occurred.",
+    msg: "An unexpected error occurred.",
     });
   }
 }

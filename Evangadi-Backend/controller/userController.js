@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 async function register(req, res) {
   const { userName, firstName, lastName, email, password } = req.body;
   if (!email || !password || !firstName || !lastName || !userName) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ msg: "please provide all required fields!" });
+    return res.status(StatusCodes.BAD_REQUEST).json({ msg: "please provide all required fields!" });//404
   }
 try {
   const [user] = await dbConnection.query("select userName,userId from users where userName =? or email =? ", [userName,email])
@@ -17,7 +17,7 @@ try {
 if(password.length<=8){
     return res.status(StatusCodes.BAD_REQUEST).json({ msg: "password must be at least 8 characters" });
   }
-// encrypt the password
+// encrypt the password//123456789
 const salt = await bcrypt.genSalt(10)
 const hashedPassword = await bcrypt.hash(password,salt)
 
@@ -47,7 +47,7 @@ async function login(req, res) {
         .status(StatusCodes.BAD_REQUEST)
         .json({ msg: "invalid credential!" });
     }
-    //compare password
+    //compare password 
     const isMatch = await bcrypt.compare(password, user[0].password);
     if (!isMatch) {
       return res
@@ -62,7 +62,7 @@ async function login(req, res) {
 
     return res
       .status(StatusCodes.OK)
-      .json({ msg: "user login successfull", token, userName });
+      .json({ msg: "user login successfull" });
   } catch (error) {
     console.log(error.message);
     return res
@@ -75,5 +75,9 @@ async function checkUser(req, res) {
   const userId = req.user.userId;
   res.status(StatusCodes.OK).json({ msg: "valid user", userName, userId });
 }
+async function logOut(req,res) {
+  return res.status(StatusCodes.OK).json({msg:"successfuly logout"})
+  
+}
 
-module.exports = { register, login, checkUser };
+module.exports = { register, login, checkUser,logOut};

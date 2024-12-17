@@ -8,12 +8,14 @@ const authMiddleware = require("../middleWare/authMiddleware");
 const { register, login, checkUser } = require("../controller/userController");
 // register route
 router.post("/register", register);
-
+//http://localhost:3003/api/user/check
 // login user
 router.post("/login", login);
 
 // check user
 router.get("/check",authMiddleware,checkUser);
+//logout 
+router.delete('/logout',logOut);
 
 
 
