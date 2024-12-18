@@ -1,5 +1,5 @@
-const dbConnection = require("../db/dbconfig");
-const { StatusCodes } = require("http-status-codes");
+import { dbPromise } from '../db/dbconfig.js';
+import {StatusCodes} from 'http-status-codes';
 async function postAnswer(req, res) {
   // res.send("answer")
   const { questionId, answer } = req.body;
@@ -12,7 +12,7 @@ async function postAnswer(req, res) {
   }
   try {
     const userId=req.user.userId;
-    await dbConnection.query(
+    await dbPromise.query(
       "INSERT INTO answers(questionId,answer,userId) VALUES(?,?,?)",
       [questionId, answer, userId]
     );
@@ -33,7 +33,7 @@ async function getAnswer (req, res) {
   console.log(questionId);
   try {
     //select * from answers where questionId=?,[questionId];
-    const [answer] = await dbConnection.query(
+    const [answer] = await dbPromise.query(
       `SELECT 
         q.questionId, q.answer, q.answerId, q.userId, q.created_at, u.userName, u.firstName, u.lastName FROM answers AS q JOIN users AS u ON q.userId = u.userId WHERE q.questionId = ?`,  
       [questionId]
@@ -52,4 +52,4 @@ async function getAnswer (req, res) {
   }
 };
 
-module.exports = { postAnswer, getAnswer };
+export{ postAnswer, getAnswer };

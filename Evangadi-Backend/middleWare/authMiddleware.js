@@ -1,6 +1,5 @@
-const {StatusCodes}=require('http-status-codes')
-const jwt=require('jsonwebtoken')
-
+import {StatusCodes} from 'http-status-codes';
+import jwt from 'jsonwebtoken';
 //when user send data they will use token to authenticate them
 const authMiddleware = async (req, res, next) => {
   //take token from users (generated token)
@@ -30,4 +29,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports= authMiddleware;
+export default authMiddleware;

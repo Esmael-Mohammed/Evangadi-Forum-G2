@@ -1,12 +1,10 @@
 //! Endpoint Implementation:
 // Load the Express framework to handle HTTP requests and responses.
-const express = require("express");
-const {StatusCodes}=require('http-status-codes')
-const crypto=require('crypto')
-const KeywordExtractor = require("keyword-extractor");
-// Initialize App
-const app = express();
-const dbConnection=require('../db/dbconfig');
+// const KeywordExtractor = require("keyword-extractor");
+import {StatusCodes} from 'http-status-codes';
+import crypto from 'crypto';
+import  keywordExtractor  from "keyword-extractor";
+import { dbPromise } from '../db/dbconfig.js';
 
 
 async function postQuestion(req, res) {
@@ -19,7 +17,7 @@ async function postQuestion(req, res) {
       });
   }
   const generateTag = (title) => {
-    const extractionResult = KeywordExtractor.extract(title, {
+    const extractionResult = keywordExtractor.extract(title, {
       language: "english",
       remove_digits: true,
       return_changed_case: true,
@@ -32,12 +30,12 @@ try {
   const { userId } = req.user;
 
   // get a unique identifier for questionid so two questions do not end up having the same id. crypto built in node module.
-  const questionId = crypto.randomBytes(16).toString("hex");
+  const questionId = parseInt(crypto.randomBytes(8).toString("hex").slice(0, 8),16);
 
   const tag = generateTag(title);
 
   // Insert question into database
-  await dbConnection.query(
+  await dbPromise.query(
     "INSERT INTO questions ( userId, questionId, title, description, tag, created_at) VALUES (?,?,?,?,?,?)",
     [userId, questionId, title, description, tag, new Date()]
   );
@@ -65,7 +63,7 @@ async function getSingleQuestion(req, res) {
   }
   try {
     // Query the database to get the question details
-    const [question] = await dbConnection.query(
+    const [question] = await dbPromise.query(
       "SELECT * FROM questions WHERE questionId =?",
       [questionId])
     
@@ -89,7 +87,7 @@ async function getSingleQuestion(req, res) {
  async function getAllQuestions(req, res) {
    try {
      // Query the database to fetch all questions
-     const [questions] = await dbConnection.query("SELECT * FROM questions"); // Fetch data from 'questions' table
+     const [questions] = await dbPromise.query("SELECT * FROM questions"); // Fetch data from 'questions' table
 
      // Send the response JSON payload
      res.status(200).json({
@@ -106,4 +104,4 @@ async function getSingleQuestion(req, res) {
    }
  };
 
-module.exports ={getSingleQuestion,postQuestion,getAllQuestions}
+export{getSingleQuestion,postQuestion,getAllQuestions}

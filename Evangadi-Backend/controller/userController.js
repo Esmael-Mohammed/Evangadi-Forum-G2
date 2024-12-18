@@ -1,16 +1,16 @@
 
 // db Connection
-const dbConnection = require('../db/dbconfig');
-const bcrypt = require('bcrypt');
-const { StatusCodes } = require('http-status-codes')
-const jwt = require('jsonwebtoken')
+import { dbPromise } from '../db/dbconfig.js';
+import bcrypt from 'bcrypt';
+import {StatusCodes} from 'http-status-codes';
+import jwt from 'jsonwebtoken';
 async function register(req, res) {
   const { userName, firstName, lastName, email, password } = req.body;
   if (!email || !password || !firstName || !lastName || !userName) {
     return res.status(StatusCodes.BAD_REQUEST).json({ msg: "please provide all required fields!" });//404
   }
 try {
-  const [user] = await dbConnection.query("select userName,userId from users where userName =? or email =? ", [userName,email])
+  const [user] = await dbPromise.query("select userName,userId from users where userName =? or email =? ", [userName,email])
   if (user.length > 0) {
     return res.status(StatusCodes.BAD_REQUEST).json({ msg: "user already existed" });
   }
@@ -21,7 +21,7 @@ if(password.length<=8){
 const salt = await bcrypt.genSalt(10)
 const hashedPassword = await bcrypt.hash(password,salt)
 
-await dbConnection.query("INSERT INTO users (userName, firstName, lastName,email,password) VALUES (?,?,?,?,?) ",[userName,firstName,lastName,email,hashedPassword])
+await dbPromise.query("INSERT INTO users (userName, firstName, lastName,email,password) VALUES (?,?,?,?,?) ",[userName,firstName,lastName,email,hashedPassword])
 return res.status(StatusCodes.CREATED).json({ msg: "user register" });
 } catch (error) {
     console.log(error.message)
@@ -37,7 +37,7 @@ async function login(req, res) {
       .json({ msg: "please enter all required fields!" });
   }
   try {
-    const [user] = await dbConnection.query(
+    const [user] = await dbPromise.query(
       "select userName,userId,password from users where email=?",
       [email]
     );
@@ -62,7 +62,7 @@ async function login(req, res) {
 
     return res
       .status(StatusCodes.OK)
-      .json({ msg: "user login successfull" });
+      .json({ msg: "user login successfull",token,userName });
   } catch (error) {
     console.log(error.message);
     return res
@@ -80,4 +80,4 @@ async function logOut(req,res) {
   
 }
 
-module.exports = { register, login, checkUser,logOut};
+export{ register, login, checkUser,logOut};
