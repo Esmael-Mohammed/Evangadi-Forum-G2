@@ -1,0 +1,277 @@
+/* General Container Styling */
+*{
+  margin:0;
+  padding:0;
+  
+}
+/* Section Styling for Each API */
+.api-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.api-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #4CAF50; /* Green color for section titles */
+}
+
+.api-section p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-top: 5px;
+  /* margin: 1px; */
+}
+
+.api-section h3, .api-section h4 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: rgb(17, 24, 39); /* Darker color for sub-headings */
+}
+
+/* Make the text before the colon bold */
+.api-section p strong {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Code and Preformatted Text Styling */
+code {
+  background-color: #f4f4f4;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-family: Consolas, monospace;
+}
+
+pre {
+  background-color: #f4f4f4; 
+  padding: 15px;
+  border-radius: 5px;
+  font-family: Consolas, monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 10px 0;
+   color: #4CAF50;
+}
+
+
+
+strong h5 {
+  color:  #2c3e50; /* Highlight important fields */
+
+}
+
+/* Divider Styling */
+hr {
+  border: 0;
+  height: 1px;
+  background-color: #ddd;
+  margin: 20px 0;
+}
+
+/* Add spacing between paragraphs and sections */
+.api-section p, .api-section ul {
+  margin-bottom: 20px;
+}
+
+.documentation-container a {
+  color: #1b99ec;
+  text-decoration: none;
+}
+
+.documentation-container a:hover {
+  text-decoration: underline;
+}
+/* number style section */
+.container {
+  display: flex;           /* Use Flexbox to align elements side by side */
+  align-items: center;     /* Vertically center the circle and text */
+  gap: 5px;                /* Space between the circle and the text */
+}
+.circle {
+  width: 20px;             /* Smaller size for the circle */
+  height: 20px;            /* Smaller size for the circle */
+  display: flex;           /* Flexbox to center the number inside the circle */
+  align-items: center;     /* Vertically center the number */
+  justify-content: center; /* Horizontally center the number */
+  border-radius: 50%;      /* Makes the div a circle */
+  background-color: rgb(227, 232, 237); /* Color for the circle (red) */
+  color: rgb(5, 5, 5);            /* Color of the number */
+  font-size: 13px;         /* Smaller font size for the number */
+  font-weight: bold;       /* Bold text for the number */
+}
+.error-text {
+  font-size: 14px;         /* Regular font size for the text */
+  color: #333;             /* Dark color for the text */
+}
+
+/* .api-example {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 12px;
+} */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .documentation-container {
+    padding: 15px;
+  }
+
+  .api-section {
+    padding: 15px;
+  }
+
+  .api-section h2, .api-section h3, .api-section h4 {
+    font-size: 1.2rem;
+  }
+
+  .documentation-container h1 {
+    font-size: 1.5rem;
+  }
+}
+
+
+.toc-sidebar {
+  width: 200px; /* Sidebar width */
+  padding-right: 20px; /* Space between the TOC and content */
+  position: fixed; /* Fixes the TOC on the left side */
+  top: 80px; /* Adjust this if you have a top header */
+  left: 20px; /* Adjust this if you want more space from the left edge */
+    display: flex;
+  justify-content: space-between; /* Optional: To space out items horizontally */
+  padding: 20px;
+}
+
+.api-content {
+  margin-left: 270px; /* Adjust this according to your sidebar width */
+  padding-top: 80px; /* Adjust depending on the height of your header */
+  width: calc(250% 70px); /* Makes content take the rest of the screen width */
+}
+
+/* Center the container in the middle of the page */
+
+.documentation-container {
+  display: flex;               /* Use flexbox layout */
+  justify-content: center;     /* Center horizontally */
+  align-items: center;         /* Center vertically */
+  min-height: 100vh;           /* Take full viewport height */
+  padding: 0 !important;       /* Remove padding to avoid extra space */
+  margin: 0 !important;        /* Remove margin to avoid extra space */
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Create the flex container for TOC and content */
+.documentation-content-wrapper {
+  display: flex;          /* Horizontal layout */
+  justify-content: space-between; /* Space between the sidebar and content */
+  width: 100%;   /* Take full width within the container */
+  padding-right: 50px;         
+  gap: 10px;  /* Optional: space between TOC and content */
+}
+
+/* Title of Documentation */
+.documentation-container h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+}
+
+
+/* Sidebar styles for TOC */
+.toc-sidebar {
+  flex: 0 0 250px;          /* Sidebar takes 250px width */
+  padding: 20px;            /* Optional: add padding inside the sidebar */
+  background-color: #f3f3f3; /* Optional: background color */
+  border-radius: 8px; 
+  height: 70%;      /* Optional: rounded corners */
+}
+/* .toc-container{
+  max-width: 150%;
+} */
+
+.toc-container h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.toc-container ul {
+  list-style-type: none; /* No bullet points for the TOC */
+  padding-left: 0;
+}
+
+.toc-container ul li {
+  margin-bottom: 8px;
+}
+.toc-container ul li a {
+  text-decoration: none; /* Removes underline from links */
+  color: #103686; /* Link color */
+  font-size: 16px;
+}
+
+.toc-container ul li a:hover {
+  text-decoration: none/* Adds underline on hover */
+}
+
+
+
+.api-section {
+  margin-bottom: 40px;
+}
+
+.api-section h2 {
+  font-size: 24px;
+}
+
+
+
+/* Content area styles */
+.api-content {
+  flex: 1;                  /* Content area takes the remaining space */
+  padding: 20px;            /* Optional: space inside the content */
+  background-color: #fff;   /* Optional: background color */
+  border-radius: 8px;       /* Optional: rounded corners */
+}
+/* *********************** */
+.container--flex--wrap {
+  flex-wrap: wrap;             /* Ensures elements wrap correctly on mobile */
+  background-color: #44B78B;   /* Background color */
+  position: sticky;            /* Makes the header sticky */
+  z-index: 10;                 /* Ensure it appears above other elements */
+  padding: 0 !important;       /* Remove padding to eliminate spacing */
+  margin: 0 !important;        /* Remove margin to eliminate any outer space */
+  width: 100%;                 /* Ensure full width of the container */
+  box-shadow: 0 4px 6px rgba(119, 48, 48, 0.1); /* Shadow to make it pop */
+}
+
+/* The flex container to align content */
+.container--flex {
+  display: flex;               /* Set to flex layout */
+  align-items: center;         /* Vertically center the content */
+  justify-content: center;     /* Center horizontally */
+  height: 60px;                /* Set the height of the header */
+  text-align: center;
+  width: 100%; 
+  margin: 0;                /* Ensure full width */
+}
+
+/* Style for the header text */
+.container--flex h1 {
+  font-size: 24px;             /* Medium font size for the header */
+  color: #fff;                 /* White text color */
+  margin: 0;                   /* Remove any margin around the heading */
+}
+
+
+/* Responsive handling for mobile screens */
+@media (max-width: 768px) {
+    .container--flex {
+        flex-direction: column; /* Stack elements vertically on smaller screens */
+        align-items: center; /* Center items when stacked */
+    }
+}
