@@ -4,6 +4,7 @@ import { dbPromise } from '../db/dbconfig.js';
 import bcrypt from 'bcrypt';
 import {StatusCodes} from 'http-status-codes';
 import jwt from 'jsonwebtoken';
+import validator from 'validater'
 async function register(req, res) {
   const { userName, firstName, lastName, email, password } = req.body;
   if (!email || !password || !firstName || !lastName || !userName) {
@@ -14,8 +15,18 @@ try {
   if (user.length > 0) {
     return res.status(StatusCodes.BAD_REQUEST).json({ msg: "user already existed" });
   }
+  //validating  strong password and email format
 if(password.length<=8){
-    return res.status(StatusCodes.BAD_REQUEST).json({ msg: "password must be at least 8 characters" });
+    return res.status(StatusCodes.BAD_REQUEST).json({ 
+      success: false,
+      msg: "password must be at least 8 characters" });
+  }
+ 
+  if (!validator.isEmail(email)) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "Please enter a valid email",
+    });
   }
 // encrypt the password//123456789
 const salt = await bcrypt.genSalt(10)
