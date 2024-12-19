@@ -1,0 +1,75 @@
+# API Documentation Tasks for Evangadi Forum User Login and Get Answers for a Question
+
+1. User Login
+   Endpoint:
+   POST /api/login
+   Required Credentials:
+   The request body must include the following JSON payload:
+   {
+   "email": "user@example.com",
+   "password": "123password"
+   }
+   Expected Behavior:
+   The server will authenticate the user based on the provided credentials.
+   If the credentials are valid:
+   A success response will be sent with a token for authentication in future requests.
+   Additional user details may also be returned, such as user ID or role.
+   Response Status Codes:
+   200 OK: Login successful.
+   {
+   "message": "Login successful",
+   "token": "jwt_token_here"
+   }
+
+401 Unauthorized: Invalid credentials or unauthorized access.
+{
+"message": "Invalid email or password"
+}
+
+# ================================================================================
+
+2. Get Answers for a Question
+   Endpoint:
+   GET /api/questions/:questionId/answers`
+
+Query Parameters or Path Variables:
+Path Variable:
+questionId: The unique identifier for the question whose answers are being retrieved.
+
+Example:
+GET /api/questions/12345/answers
+Expected Behavior:
+Retrieves all answers associated with the specified question.
+If the question exists and has answers:
+Returns a list of answers in JSON format.
+If the question does not exist:
+Returns an appropriate error message.
+Response Format:
+
+Successful Response (200 OK):
+
+{
+"questionId": "12345",
+"question": "What is Node.js?",
+"answers": [
+{
+"id": "1",
+"answer": "Node.js is a JavaScript runtime built on Chrome's V8 engine.",
+"answer writer": "Evangadi group 2",
+"createdAt": "2024-12-01T12:34:56Z"
+},
+{
+"id": "2",
+"answer": "It allows running JavaScript on the server-side.",
+"answer writer": "Evangadi group 2",
+"createdAt": "2024-12-02T08:22:10Z"
+}
+]
+}
+
+Error Responses:
+
+404 Not Found: Question does not exist.
+{
+"message": "Question not found"
+}
