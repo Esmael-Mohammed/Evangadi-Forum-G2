@@ -968,7 +968,119 @@ const GetSingleQuestionAPI = () => {
 };
 // post Question API DOcument **************************************
 
+const PostQuestionAPI = () => {
+  return (
+    <section className="api-section" id="postqu-api">
+      <h2>Post Question API</h2>
+      <p>
+        <strong>Endpoint:</strong> <code>/api/questions</code>
+      </p>
+      <p>
+        <strong>Method:</strong> POST
+      </p>
+      <p>
+        <strong>Description:</strong> This API endpoint allows users to post a
+        question. The title and description are required, and a unique question
+        ID is automatically generated. A tag is also assigned to the question
+        based on its title.
+      </p>
+
+      <h3>Request Body:</h3>
+      <p>The request must include a JSON body with the following fields:</p>
+      <pre>{`{
+  "title": "<Question Title>",
+  "description": "<Question Description>"
+}`}</pre>
+      <p>
+        - <code>title</code>: The title of the question. Must be a non-empty
+        string. - <code>description</code>: A detailed description of the
+        question. Must be a non-empty string.
+      </p>
+
+      <h3>Response:</h3>
+      <h4>Successful Response:</h4>
+      <p>Status Code: 201 Created</p>
+      <p>Content-Type: application/json</p>
+      <pre>{`{
+  "msg": "Question created successfully"
+}`}</pre>
+      <p>
+        <strong>Description:</strong> If the question is successfully created,
+        the server responds with a success message.
+      </p>
+
+      <h4>Error Response (Missing Required Fields):</h4>
+      <p>Status Code: 400 Bad Request</p>
+      <pre>{`{
+  "error": "Please provide all required fields!"
+}`}</pre>
+      <p>
+        <strong>Description:</strong> This error occurs if either the title or
+        description is missing from the request body.
+      </p>
+
+      <h4>Error Response (Internal Server Error):</h4>
+      <p>Status Code: 500 Internal Server Error</p>
+      <pre>{`{
+  "error": "An unexpected error occurred."
+}`}</pre>
+      <p>
+        <strong>Description:</strong> This error occurs when there is an issue
+        with the database or server while processing the request.
+      </p>
+
+      <div className="api-doc-section">
+        <h3>Example Usage</h3>
+        <div className="api-example">
+          <code>
+            POST /api/questions <br />
+            Content-Type: application/json <br />
+            Body: <br />
+            {`{
+  "title": "How do I use async/await in JavaScript?",
+  "description": "I want to learn how async/await works in JavaScript."
+}`}
+          </code>
+        </div>
+      </div>
+
+      <h3>Function Overview:</h3>
+      <p>
+        The <strong>postQuestion</strong> function handles the logic for
+        creating a new question. It performs the following steps:
+      </p>
+      <ul>
+        <li>
+          <strong>Validates input:</strong> It checks if both title and
+          description are provided in the request body. If any of these fields
+          is missing, it returns a 400 error with a relevant message.
+        </li>
+        <li>
+          <strong>Generates a unique question ID:</strong> It uses the built-in{" "}
+          <code>crypto</code> module to generate a random unique ID for the
+          question.
+        </li>
+        <li>
+          <strong>Generates a tag:</strong> It generates a tag based on the
+          question title using a keyword extraction function. If no relevant
+          keywords are found, the default tag "general" is used.
+        </li>
+        <li>
+          <strong>Inserts data into the database:</strong> It inserts the
+          question into the <code>questions</code> table with the user ID,
+          question ID, title, description, generated tag, and the current
+          timestamp.
+        </li>
+        <li>
+          <strong>Responds with success:</strong> If the insertion is
+          successful, it returns a 201 status code with a success message.
+        </li>
+      </ul>
+    </section>
+  );
+};
 // Main ApiDocumentation Component
+
 const ApiDocumentation = () => {
   return (
     <>
