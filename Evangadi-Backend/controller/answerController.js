@@ -38,11 +38,11 @@ async function getAnswer (req, res) {
         q.questionId, q.answer, q.answerId, q.userId, q.created_at, u.userName, u.firstName, u.lastName FROM answers AS q JOIN users AS u ON q.userId = u.userId WHERE q.questionId = ?`,  
       [questionId]
     );
-    if (!answer || answer.length === 0) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        msg: "No answers found for this question.",
-      });
-    }
+    // if (!answer || answer.length === 0) {
+    //   return res.status(StatusCodes.NOT_FOUND).json({
+    //     msg: "No answers found for this question.",
+    //   });
+    // }
     return res.status(StatusCodes.OK).json(answer);
   } catch (error) {
     console.error(error.message);

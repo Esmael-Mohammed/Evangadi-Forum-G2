@@ -3,7 +3,7 @@ import { dbPromise } from "../db/dbconfig.js";
 import bcrypt from "bcrypt";
 import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
-import validator from "validater";
+import validator from "validator";
 async function register(req, res) {
   const { userName, firstName, lastName, email, password } = req.body;
   if (!email || !password || !firstName || !lastName || !userName) {
@@ -43,7 +43,17 @@ async function register(req, res) {
       "INSERT INTO users (userName, firstName, lastName,email,password) VALUES (?,?,?,?,?) ",
       [userName, firstName, lastName, email, hashedPassword]
     );
-    return res.status(StatusCodes.CREATED).json({ msg: "user register" });
+    // return res.status(StatusCodes.CREATED).json({ msg: "user register" });
+    const [data] = await dbPromise.query(`SELECT * FROM users`);
+    // After saving user, create a JWT token
+    const userId = data[data.length - 1].userId;
+    const token = jwt.sign({ userName, userId }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+    return res.status(StatusCodes.OK).json({
+      data: data[data.length - 1],
+      token: token,
+    });
   } catch (error) {
     console.log(error.message);
     return res
@@ -99,7 +109,9 @@ async function checkUser(req, res) {
   res.status(StatusCodes.OK).json({ msg: "valid user", userName, userId });
 }
 async function logOut(req, res) {
-  return res.status(StatusCodes.OK).json({ msg: "successfuly logout" });
+  return res.status(StatusCodes.OK).json({
+    success:true,
+    msg: "successfuly logout" });
 }
 
 export { register, login, checkUser, logOut };
