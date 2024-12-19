@@ -1,7 +1,5 @@
-const dbConnection = require("../db/dbconfig");
-const { StatusCodes } = require("http-status-codes");
-
-
+import { dbPromise } from '../db/dbconfig.js';
+import {StatusCodes} from 'http-status-codes';
 async function postAnswer(req, res) {
   // res.send("answer")
   const { questionId, answer } = req.body;
@@ -14,7 +12,7 @@ async function postAnswer(req, res) {
   }
   try {
     const userId=req.user.userId;
-    await dbConnection.query(
+    await dbPromise.query(
       "INSERT INTO answers(questionId,answer,userId) VALUES(?,?,?)",
       [questionId, answer, userId]
     );
@@ -35,16 +33,16 @@ async function getAnswer (req, res) {
   console.log(questionId);
   try {
     //select * from answers where questionId=?,[questionId];
-    const [answer] = await dbConnection.query(
+    const [answer] = await dbPromise.query(
       `SELECT 
         q.questionId, q.answer, q.answerId, q.userId, q.created_at, u.userName, u.firstName, u.lastName FROM answers AS q JOIN users AS u ON q.userId = u.userId WHERE q.questionId = ?`,  
       [questionId]
     );
-    if (!answer || answer.length === 0) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        msg: "No answers found for this question.",
-      });
-    }
+    // if (!answer || answer.length === 0) {
+    //   return res.status(StatusCodes.NOT_FOUND).json({
+    //     msg: "No answers found for this question.",
+    //   });
+    // }
     return res.status(StatusCodes.OK).json(answer);
   } catch (error) {
     console.error(error.message);
@@ -54,4 +52,4 @@ async function getAnswer (req, res) {
   }
 };
 
-module.exports = { postAnswer, getAnswer };
+export{ postAnswer, getAnswer };

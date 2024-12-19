@@ -1,11 +1,11 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
 //authonthication middleware
-const authMiddleware = require("../middleWare/authMiddleware");
-
+import authMiddleware from "../middleWare/authMiddleware.js";
 // user controllers
-const { register, login, checkUser } = require("../controller/userController");
+import { register,login,checkUser,logOut } from "../controller/userController.js";
+
 // register route
 router.post("/register", register);
 //http://localhost:3003/api/user/check
@@ -17,8 +17,5 @@ router.get("/check",authMiddleware,checkUser);
 //logout 
 router.delete('/logout',logOut);
 
-
-
 //user controllers
-
-module.exports = router;
+export default router;

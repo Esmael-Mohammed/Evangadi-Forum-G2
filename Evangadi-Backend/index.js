@@ -1,13 +1,13 @@
-
-const express= require ('express');
-const cors=require('cors');
-const app= express();
-require('dotenv').config();
-const dbConnection=require('./db/dbconfig')
-
-const answerRouter=require('./route/answerRoute')
-const  questionRouter  = require("./route/questionRoute");
-const userRouter = require('./route/userRoute')
+import express  from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { dbPromise } from './db/dbconfig.js';
+import answerRouter from './route/answerRoute.js';
+import questionRouter from './route/questionRoute.js';
+import userRouter from './route/userRoute.js';
+import authMiddleware from './middleWare/authMiddleware.js';
+const app=express();
+dotenv.config();
 app.use(cors())
 // json middleware to extract json data
 app.use(express.json())
@@ -15,7 +15,6 @@ app.use(express.json())
 app.use("api/answer",answerRouter)
 
 const port=3003;
-const authMiddleware=require('./middleWare/authMiddleware')
 //user routes middleware
 app.use("/api/user", userRouter);//http://localhost:3003/api/user/register
 //question routes middleware
@@ -30,7 +29,7 @@ app.get("/", (req, res) => {
 //new method of server starter with db connection
 const startConnection = async () => {
   try {
-    const result = await dbConnection.execute("select 'test'");
+    const result = await dbPromise.execute("select 'test'");
     console.log(result);
     await app.listen(port);
     console.log("database connected");
@@ -40,3 +39,4 @@ const startConnection = async () => {
   }
 };
 startConnection();
+

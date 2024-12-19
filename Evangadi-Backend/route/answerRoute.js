@@ -1,9 +1,9 @@
-const express = require("express");
+import express from 'express'
 const router = express.Router();
 
-const { postAnswer, getAnswer } = require("../controller/answerController");
+import { postAnswer,getAnswer } from '../controller/answerController.js';
 // answer route
 router.post("/answer", postAnswer);
 router.get("/answer/:questionId", getAnswer);
 
-module.exports = router;
+export default router;  // export the router

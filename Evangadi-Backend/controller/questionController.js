@@ -1,13 +1,12 @@
 //! Endpoint Implementation:
 
 // Load the Express framework to handle HTTP requests and responses.
-const express = require("express");
-const {StatusCodes}=require('http-status-codes')
-const crypto=require('crypto')
-const KeywordExtractor = require("keyword-extractor");
-// Initialize App
-const app = express();
-const dbConnection=require('../db/dbconfig');
+// const KeywordExtractor = require("keyword-extractor");
+import {StatusCodes} from 'http-status-codes';
+import crypto from 'crypto';
+import  keywordExtractor  from "keyword-extractor";
+import { dbPromise } from '../db/dbconfig.js';
+import { console } from 'inspector/promises';
 
 
 async function postQuestion(req, res) {
@@ -20,7 +19,7 @@ async function postQuestion(req, res) {
       });
   }
   const generateTag = (title) => {
-    const extractionResult = KeywordExtractor.extract(title, {
+    const extractionResult = keywordExtractor.extract(title, {
       language: "english",
       remove_digits: true,
       return_changed_case: true,
@@ -33,12 +32,12 @@ try {
   const { userId } = req.user;
 
   // get a unique identifier for questionid so two questions do not end up having the same id. crypto built in node module.
-  const questionId = crypto.randomBytes(16).toString("hex");
+  const questionId = parseInt(crypto.randomBytes(8).toString("hex").slice(0, 8),16);
 
   const tag = generateTag(title);
 
   // Insert question into database
-  await dbConnection.query(
+  await dbPromise.query(
     "INSERT INTO questions ( userId, questionId, title, description, tag, created_at) VALUES (?,?,?,?,?,?)",
     [userId, questionId, title, description, tag, new Date()]
   );
@@ -66,8 +65,8 @@ async function getSingleQuestion(req, res) {
   }
   try {
     // Query the database to get the question details
-    const [question] = await dbConnection.query(
-      "SELECT * FROM questions WHERE questionId =?",
+    const [question] = await dbPromise.query(
+      `SELECT questions.questionId, questions.title, questions.description, users.userName, questions.created_at FROM questions JOIN users ON users.userId = questions.userId WHERE questionId = ?`,
       [questionId])
     
     //  If no question found, return 404
@@ -77,7 +76,7 @@ async function getSingleQuestion(req, res) {
         .json({ msg: "Question not found" });
     }
     // Return the question details
-    return res.status(StatusCodes.OK).json({ question: question[0] });
+    return res.status(StatusCodes.OK).json(question[0] );
   } catch (error) {
     console.error(error.message);
     return res
@@ -90,10 +89,12 @@ async function getSingleQuestion(req, res) {
  async function getAllQuestions(req, res) {
    try {
      // Query the database to fetch all questions
-     const [questions] = await dbConnection.query("SELECT * FROM questions"); // Fetch data from 'questions' table
-
+     const [questions] = await dbPromise.query(`
+      SELECT q.questionId, q.title, q.description, q.userId, q.created_at, u.userName, u.firstName, u.lastName, (SELECT COUNT(*) FROM answers WHERE answers.questionId = q.questionId) AS total_answers FROM questions AS q JOIN users AS u ON q.userId = u.userId`
+      ); // Fetch data from 'questions' table
+ console.log(questions)
      // Send the response JSON payload
-     res.status(200).json({
+   return  res.status(200).json({
        success: true,
        count: questions.length, // Number of questions
        data: questions, // Array of questions
@@ -107,4 +108,4 @@ async function getSingleQuestion(req, res) {
    }
  };
 
-module.exports ={getSingleQuestion,postQuestion,getAllQuestions}
+export{getSingleQuestion,postQuestion,getAllQuestions}
