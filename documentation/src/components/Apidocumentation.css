@@ -115,6 +115,10 @@ hr {
   font-size: 12px;
 } */
 
+
+
+/* media query
+============================================ */
 /* Responsive Design */
 @media (max-width: 768px) {
   .documentation-container {
