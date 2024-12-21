@@ -1,16 +1,14 @@
 import mysql from 'mysql2'
+import dotenv from 'dotenv';
+dotenv.config();
 // const app = express();
 
 // Database connection configuration
 const dbConnection = mysql.createPool({
-    // user:process.env.USER,
-    // host:process.env.HOST,
-    // password:process.env.PASSWORD,
-    // database:process.env.DB_NAME,
-    user:"u961275249_kebe",
-    host:"82.197.82.42",
-    password:"firaol@B123",
-    database:"u961275249_evangadi_DB",
+    user:process.env.USER,
+    host:process.env.HOST,
+    password:process.env.PASSWORD,
+    database:process.env.DB_NAME,
     connectionLimit: 10
 });
 // console.log(da);

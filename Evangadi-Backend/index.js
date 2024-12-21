@@ -6,6 +6,8 @@ import answerRouter from './route/answerRoute.js';
 import questionRouter from './route/questionRoute.js';
 import userRouter from './route/userRoute.js';
 import authMiddleware from './middleWare/authMiddleware.js';
+
+
 const app=express();
 dotenv.config();
 app.use(cors())
@@ -14,7 +16,7 @@ app.use(express.json())
 
 app.use("api/answer",answerRouter)
 
-const port=3003;
+const port=process.env.PORT || 4500;
 //user routes middleware
 app.use("/api/user", userRouter);//http://localhost:3003/api/user/register
 //question routes middleware
