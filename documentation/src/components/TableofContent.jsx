@@ -16,7 +16,6 @@ function TableOfContents() {
         <li>
           <a href="#con-api">Connection&Table Creation</a>
         </li>
-        {/* Links pointing to the corresponding section IDs */}
         <li>
           <a href="#auth-api">Authentication Middleware</a>
         </li>
@@ -37,6 +36,9 @@ function TableOfContents() {
         </li>
         <li>
           <a href="#postanswer-api">post Answer</a>
+        </li>
+        <li>
+          <a href="#deleteanswer-api">Delete Answer</a>
         </li>
         <li>
           <a href="#getallqu-api">Get All Questions</a>
