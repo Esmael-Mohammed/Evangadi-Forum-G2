@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ApiDocumentation.css";
 // import { Link } from 'react-router-dom'; // Make sure this import exists
-import TableOfContents from "./TableOfContents";
+import TableOfContents from "./TableofContent";
 
 // what is **************************
 const ApiDocintroducion = () => {
@@ -37,7 +37,7 @@ const ApiDocintroducion = () => {
       <h3>Base URL</h3>
       <p>
         To use this API, send an HTTP request to the base URL:{" "}
-        <code>https://localhost:4400</code> with the given endpoint.
+        <code>https://localhost:3003</code> with the given endpoint.
       </p>
     </section>
   );
@@ -1383,7 +1383,7 @@ const PostQuestionAPI = () => {
 
 // Main ApiDocumentation Component
 
-const ApiDocumentation = () => {
+const Apidocumentation = () => {
   return (
     <>
       <div className="container container--flex container--flex--wrap">
@@ -1424,4 +1424,4 @@ const ApiDocumentation = () => {
   );
 };
 
-export default ApiDocumentation;
+export default Apidocumentation;
