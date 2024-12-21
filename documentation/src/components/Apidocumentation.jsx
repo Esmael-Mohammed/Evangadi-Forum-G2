@@ -937,7 +937,122 @@ const GetAnswerAPI = () => {
     </section>
   );
 };
+// how to delete the answer if needed API Documnet ***********************
+const DeleteAnswerAPI = () => {
+  return (
+    <section className="api-section" id="deleteanswer-api">
+      <h2>Delete Answer by User API</h2>
+      <p>
+        <strong>Endpoint:</strong> <code>/answer/:userId</code>
+      </p>
+      <p>
+        <strong>Method:</strong> DELETE
+      </p>
+      <p>
+        <strong>Description:</strong> This API allows users to delete their own
+        answers. To maintain data privacy and security, only the owner of the
+        answers (identified by their <code>userId</code>) is authorized to
+        delete them. Attempts to delete answers owned by another user will be
+        denied.
+      </p>
 
+      <h3>Request Parameters:</h3>
+      <p>The endpoint requires the following parameter:</p>
+      <pre>
+        {`{
+  "userId": "string" // The unique identifier of the user making the request (required)
+}`}
+      </pre>
+      <p>
+        <strong>Required Parameter:</strong> <code>userId</code> must match the
+        identity of the authenticated user for this operation to proceed.
+      </p>
+
+      <h3>Response:</h3>
+      <h4>Successful Response:</h4>
+      <p>
+        <strong>Status Code:</strong> 200 OK
+      </p>
+      <p>
+        <strong>Content-Type:</strong> application/json
+      </p>
+      <pre>
+        {`{
+  "success": true,
+  "message": "Answer removed successfully"
+}`}
+      </pre>
+      <p>
+        <strong>Description:</strong> The user's answers were successfully
+        deleted.
+      </p>
+
+      <h4>Error Responses:</h4>
+      <div className="container">
+        <div className="circle">1</div>
+        <div className="error-text">
+          <h5>Unauthorized Action</h5>
+        </div>
+      </div>
+      <p>
+        <strong>Status Code:</strong> 403 Forbidden
+      </p>
+      <pre>
+        {`{
+  "success": false,
+  "message": "You are not authorized to delete this answer"
+}`}
+      </pre>
+      <p>
+        <strong>Description:</strong> This response occurs when a user attempts
+        to delete answers that do not belong to them. Ownership is strictly
+        enforced to protect user data.
+      </p>
+
+      <div className="container">
+        <div className="circle">2</div>
+        <div className="error-text">
+          <h5>Answer Not Found</h5>
+        </div>
+      </div>
+      <p>
+        <strong>Status Code:</strong> 404 Not Found
+      </p>
+      <pre>
+        {`{
+  "success": false,
+  "message": "Answer not found"
+}`}
+      </pre>
+      <p>
+        <strong>Description:</strong> No answers were found for the provided
+        user ID. This could indicate that the user has no existing answers or
+        that the ID was invalid.
+      </p>
+
+      <div className="container">
+        <div className="circle">3</div>
+        <div className="error-text">
+          <h5>Internal Server Error</h5>
+        </div>
+      </div>
+      <p>
+        <strong>Status Code:</strong> 500 Internal Server Error
+      </p>
+      <pre>
+        {`{
+  "success": false,
+  "message": "Something went wrong, try again later!"
+}`}
+      </pre>
+      <p>
+        <strong>Description:</strong> A server-side error occurred, preventing
+        the request from being processed. This may be due to issues with the
+        database or backend logic.
+      </p>
+    </section>
+  );
+};
 // Get AllQuestion API DOcumente *****************************
 const GetAllQuestionsAPI = () => {
   return (
@@ -1297,6 +1412,7 @@ const ApiDocumentation = () => {
             <LogOutAPI />
             <GetAnswerAPI />
             <PostAnswerAPI />
+            <DeleteAnswerAPI />
             <GetAllQuestionsAPI />
             <GetSingleQuestionAPI />
             <PostQuestionAPI />
