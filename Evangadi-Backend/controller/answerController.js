@@ -51,5 +51,37 @@ async function getAnswer (req, res) {
     });
   }
 };
+//additional api for deleting answer by user
+const deleteAnswerByUser = async (req, res) => {
+  // const userId = req.user.userId;
+  // const questionId = req.params.questionId;
+  const { userId } = req.params;
 
-export{ postAnswer, getAnswer };
+  try {
+    // Delete the answers by userId
+    const answer = await dbPromise.query(
+      "DELETE FROM answers WHERE userId = ?",
+      [userId]
+    );
+    // Respond with success message
+    if (answer.affectedRows === 0) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: true,
+        message: "Answer not found",
+      });
+    } else {
+      // Check if any answers were deleted
+      return res.status(StatusCodes.OK).json({
+        success: true,
+        message: "Answer removed successfully",
+      });
+    }
+  } catch (error) {
+    console.error(error.message);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: "Something went wrong, try again later!",
+    });
+  }
+};
+export{ postAnswer, getAnswer,deleteAnswerByUser };

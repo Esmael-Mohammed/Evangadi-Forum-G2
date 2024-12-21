@@ -114,4 +114,5 @@ async function logOut(req, res) {
     msg: "successfuly logout" });
 }
 
+
 export { register, login, checkUser, logOut };
