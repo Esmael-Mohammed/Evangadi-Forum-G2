@@ -943,7 +943,7 @@ const DeleteAnswerAPI = () => {
     <section className="api-section" id="deleteanswer-api">
       <h2>Delete Answer by User API</h2>
       <p>
-        <strong>Endpoint:</strong> <code>/answer/:userId</code>
+        <strong>Endpoint:</strong> <code>/api/answer/:userId</code>
       </p>
       <p>
         <strong>Method:</strong> DELETE
