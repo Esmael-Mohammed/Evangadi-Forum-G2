@@ -1,8 +1,7 @@
 /* General Container Styling */
-*{
-  margin:0;
-  padding:0;
-  
+* {
+  margin: 0;
+  padding: 0;
 }
 /* Section Styling for Each API */
 .api-section {
@@ -16,7 +15,7 @@
 .api-section h2 {
   font-size: 1.5rem;
   margin-bottom: 10px;
-  color: #4CAF50; /* Green color for section titles */
+  color: #4caf50; /* Green color for section titles */
 }
 
 .api-section p {
@@ -26,7 +25,8 @@
   /* margin: 1px; */
 }
 
-.api-section h3, .api-section h4 {
+.api-section h3,
+.api-section h4 {
   font-size: 1.2rem;
   margin-bottom: 8px;
   color: rgb(17, 24, 39); /* Darker color for sub-headings */
@@ -47,21 +47,18 @@ code {
 }
 
 pre {
-  background-color: #f4f4f4; 
+  background-color: #f4f4f4; /*#202D63 #f4f4f4*/
   padding: 15px;
   border-radius: 5px;
   font-family: Consolas, monospace;
   white-space: pre-wrap;
   word-wrap: break-word;
   margin: 10px 0;
-   color: #4CAF50;
+  color: #4caf50;
 }
 
-
-
 strong h5 {
-  color:  #2c3e50; /* Highlight important fields */
-
+  color: #2c3e50; /* Highlight important fields */
 }
 
 /* Divider Styling */
@@ -73,7 +70,8 @@ hr {
 }
 
 /* Add spacing between paragraphs and sections */
-.api-section p, .api-section ul {
+.api-section p,
+.api-section ul {
   margin-bottom: 20px;
 }
 
@@ -87,56 +85,33 @@ hr {
 }
 /* number style section */
 .container {
-  display: flex;           /* Use Flexbox to align elements side by side */
-  align-items: center;     /* Vertically center the circle and text */
-  gap: 5px;                /* Space between the circle and the text */
+  display: flex; /* Use Flexbox to align elements side by side */
+  align-items: center; /* Vertically center the circle and text */
+  gap: 5px; /* Space between the circle and the text */
 }
 .circle {
-  width: 20px;             /* Smaller size for the circle */
-  height: 20px;            /* Smaller size for the circle */
-  display: flex;           /* Flexbox to center the number inside the circle */
-  align-items: center;     /* Vertically center the number */
+  width: 20px; /* Smaller size for the circle */
+  height: 20px; /* Smaller size for the circle */
+  display: flex; /* Flexbox to center the number inside the circle */
+  align-items: center; /* Vertically center the number */
   justify-content: center; /* Horizontally center the number */
-  border-radius: 50%;      /* Makes the div a circle */
+  border-radius: 50%; /* Makes the div a circle */
   background-color: rgb(227, 232, 237); /* Color for the circle (red) */
-  color: rgb(5, 5, 5);            /* Color of the number */
-  font-size: 13px;         /* Smaller font size for the number */
-  font-weight: bold;       /* Bold text for the number */
+  color: rgb(5, 5, 5); /* Color of the number */
+  font-size: 13px; /* Smaller font size for the number */
+  font-weight: bold; /* Bold text for the number */
 }
 .error-text {
-  font-size: 14px;         /* Regular font size for the text */
-  color: #333;             /* Dark color for the text */
+  font-size: 14px; /* Regular font size for the text */
+  color: #333; /* Dark color for the text */
 }
 
-/* .api-example {
+.api-example {
   background-color: #f4f4f4;
   padding: 10px;
   border-radius: 5px;
   font-size: 12px;
-} */
-
-
-
-/* media query */
-/* Responsive Design */
-@media (max-width: 768px) {
-  .documentation-container {
-    padding: 15px;
-  }
-
-  .api-section {
-    padding: 15px;
-  }
-
-  .api-section h2, .api-section h3, .api-section h4 {
-    font-size: 1.2rem;
-  }
-
-  .documentation-container h1 {
-    font-size: 1.5rem;
-  }
 }
-
 
 .toc-sidebar {
   width: 200px; /* Sidebar width */
@@ -144,7 +119,7 @@ hr {
   position: fixed; /* Fixes the TOC on the left side */
   top: 80px; /* Adjust this if you have a top header */
   left: 20px; /* Adjust this if you want more space from the left edge */
-    display: flex;
+  display: flex;
   justify-content: space-between; /* Optional: To space out items horizontally */
   padding: 20px;
 }
@@ -158,12 +133,12 @@ hr {
 /* Center the container in the middle of the page */
 
 .documentation-container {
-  display: flex;               /* Use flexbox layout */
-  justify-content: center;     /* Center horizontally */
-  align-items: center;         /* Center vertically */
-  min-height: 100vh;           /* Take full viewport height */
-  padding: 0 !important;       /* Remove padding to avoid extra space */
-  margin: 0 !important;        /* Remove margin to avoid extra space */
+  display: flex; /* Use flexbox layout */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  min-height: 100vh; /* Take full viewport height */
+  padding: 0 !important; /* Remove padding to avoid extra space */
+  margin: 0 !important; /* Remove margin to avoid extra space */
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
   color: #333;
@@ -171,11 +146,11 @@ hr {
 
 /* Create the flex container for TOC and content */
 .documentation-content-wrapper {
-  display: flex;          /* Horizontal layout */
+  display: flex; /* Horizontal layout */
   justify-content: space-between; /* Space between the sidebar and content */
-  width: 100%;   /* Take full width within the container */
-  padding-right: 50px;         
-  gap: 10px;  /* Optional: space between TOC and content */
+  width: 100%; /* Take full width within the container */
+  padding-right: 50px;
+  gap: 10px; /* Optional: space between TOC and content */
 }
 
 /* Title of Documentation */
@@ -185,14 +160,13 @@ hr {
   color: #333;
 }
 
-
 /* Sidebar styles for TOC */
 .toc-sidebar {
-  flex: 0 0 250px;          /* Sidebar takes 250px width */
-  padding: 20px;            /* Optional: add padding inside the sidebar */
+  flex: 0 0 250px; /* Sidebar takes 250px width */
+  padding: 20px; /* Optional: add padding inside the sidebar */
   background-color: #f3f3f3; /* Optional: background color */
-  border-radius: 8px; 
-  height: 70%;      /* Optional: rounded corners */
+  border-radius: 8px;
+  height: 70%; /* Optional: rounded corners */
 }
 /* .toc-container{
   max-width: 150%;
@@ -218,10 +192,8 @@ hr {
 }
 
 .toc-container ul li a:hover {
-  text-decoration: none/* Adds underline on hover */
+  text-decoration: none; /* Adds underline on hover */
 }
-
-
 
 .api-section {
   margin-bottom: 40px;
@@ -231,50 +203,64 @@ hr {
   font-size: 24px;
 }
 
-
-
 /* Content area styles */
 .api-content {
-  flex: 1;                  /* Content area takes the remaining space */
-  padding: 20px;            /* Optional: space inside the content */
-  background-color: #fff;   /* Optional: background color */
-  border-radius: 8px;       /* Optional: rounded corners */
+  flex: 1; /* Content area takes the remaining space */
+  padding: 20px; /* Optional: space inside the content */
+  background-color: #fff; /* Optional: background color */
+  border-radius: 8px; /* Optional: rounded corners */
 }
 /* *********************** */
 .container--flex--wrap {
-  flex-wrap: wrap;             /* Ensures elements wrap correctly on mobile */
-  background-color: #44B78B;   /* Background color */
-  position: sticky;            /* Makes the header sticky */
-  z-index: 10;                 /* Ensure it appears above other elements */
-  padding: 0 !important;       /* Remove padding to eliminate spacing */
-  margin: 0 !important;        /* Remove margin to eliminate any outer space */
-  width: 100%;                 /* Ensure full width of the container */
+  flex-wrap: wrap; /* Ensures elements wrap correctly on mobile */
+  background-color: #44b78b; /* Background color */
+  position: sticky; /* Makes the header sticky */
+  z-index: 5; /* Ensure it appears above other elements */
+  padding: 0 !important; /* Remove padding to eliminate spacing */
+  margin: 0 !important; /* Remove margin to eliminate any outer space */
+  width: 100%; /* Ensure full width of the container */
   box-shadow: 0 4px 6px rgba(119, 48, 48, 0.1); /* Shadow to make it pop */
 }
 
 /* The flex container to align content */
 .container--flex {
-  display: flex;               /* Set to flex layout */
-  align-items: center;         /* Vertically center the content */
-  justify-content: center;     /* Center horizontally */
-  height: 60px;                /* Set the height of the header */
+  display: flex; /* Set to flex layout */
+  align-items: center; /* Vertically center the content */
+  justify-content: center; /* Center horizontally */
+  height: 60px; /* Set the height of the header */
   text-align: center;
-  width: 100%; 
-  margin: 0;                /* Ensure full width */
+  width: 100%;
+  margin: 0; /* Ensure full width */
 }
 
 /* Style for the header text */
 .container--flex h1 {
-  font-size: 24px;             /* Medium font size for the header */
-  color: #fff;                 /* White text color */
-  margin: 0;                   /* Remove any margin around the heading */
+  font-size: 24px; /* Medium font size for the header */
+  color: #fff; /* White text color */
+  margin: 0; /* Remove any margin around the heading */
 }
 
-
-/* Responsive handling for mobile screens */
+/* Responsive Design */
 @media (max-width: 768px) {
-    .container--flex {
-        flex-direction: column; /* Stack elements vertically on smaller screens */
-        align-items: center; /* Center items when stacked */
-    }
+  .documentation-container {
+    padding: 15px;
+  }
+
+  .api-section {
+    padding: 15px;
+  }
+
+  .api-section h2,
+  .api-section h3,
+  .api-section h4 {
+    font-size: 1.2rem;
+  }
+
+  .documentation-container h1 {
+    font-size: 1.5rem;
+  }
+  .container--flex {
+    flex-direction: column; /* Stack elements vertically on smaller screens */
+    align-items: center; /* Center items when stacked */
+  }
 }
