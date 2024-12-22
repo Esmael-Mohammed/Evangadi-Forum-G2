@@ -1,5 +1,7 @@
 import {StatusCodes} from 'http-status-codes';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 //when user send data they will use token to authenticate them
 const authMiddleware = async (req, res, next) => {
   //take token from users (generated token)

@@ -18,9 +18,9 @@ app.use("api/answer",answerRouter)
 
 const port=process.env.PORT || 4500;
 //user routes middleware
-app.use("/api/user", userRouter);//http://localhost:3003/api/user/register
+app.use("/api/user", userRouter);
 //question routes middleware
-app.use("/api", authMiddleware, questionRouter);//http://localhost:3003/api/question
+app.use("/api", authMiddleware, questionRouter);
 //answer routes middleware
 app.use("/api", authMiddleware, answerRouter);
 //using get http method (to request data from server)

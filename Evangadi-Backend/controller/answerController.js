@@ -67,20 +67,20 @@ const deleteAnswerByUser = async (req, res) => {
     if (answer.affectedRows === 0) {
       return res.status(StatusCodes.NOT_FOUND).json({
         success: true,
-        message: "Answer not found",
+        msg: "Answer not found",
       });
     } else {
       // Check if any answers were deleted
       return res.status(StatusCodes.OK).json({
         success: true,
-        message: "Answer removed successfully",
+        msg: "Answer removed successfully",
       });
     }
   } catch (error) {
     console.error(error.message);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
-      message: "Something went wrong, try again later!",
+      msg: "Something went wrong, try again later!",
     });
   }
 };

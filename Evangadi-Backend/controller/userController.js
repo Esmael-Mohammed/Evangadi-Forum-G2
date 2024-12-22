@@ -4,7 +4,10 @@ import bcrypt from "bcrypt";
 import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
 import validator from "validator";
+import dotenv from 'dotenv';
+dotenv.config();
 async function register(req, res) {
+  console.log(req.body)
   const { userName, firstName, lastName, email, password } = req.body;
   if (!email || !password || !firstName || !lastName || !userName) {
     return res
@@ -32,7 +35,7 @@ async function register(req, res) {
     if (!validator.isEmail(email)) {
       return res.status(StatusCodes.BAD_REQUEST).json({
         success: false,
-        message: "Please enter a valid email",
+        msg: "Please enter a valid email",
       });
     }
     // encrypt the password//123456789
