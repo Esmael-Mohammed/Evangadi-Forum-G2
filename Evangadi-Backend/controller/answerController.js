@@ -50,5 +50,40 @@ const getAnswer = async (req, res) => {
     });
   }
 };
+const deleteAnswerByUser = async (req, res) => {
+  const { questionId, userId } = req.params; // Ensure these are extracted from req.params
 
-module.exports = { postAnswer, getAnswer };
+  console.log("Deleting answer for:");
+  console.log("UserId:", userId);
+  console.log("QuestionId:", questionId);
+
+  try {
+    const [result] = await dbPromise.query(
+      "DELETE FROM answers WHERE userId = ? AND questionId = ?",
+      [userId, questionId]
+    );
+
+    console.log("SQL Result:", result);
+
+    if (result.affectedRows === 0) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        msg: "Answer not found or already deleted.",
+      });
+    }
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      msg: "Answer removed successfully.",
+    });
+  } catch (error) {
+    console.error("Error deleting answer:", error.message);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      msg: "Something went wrong, try again later!",
+    });
+  }
+};
+
+
+module.exports = { postAnswer, getAnswer, deleteAnswerByUser };
