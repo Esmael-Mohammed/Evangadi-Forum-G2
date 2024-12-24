@@ -53,9 +53,9 @@ const getAnswer = async (req, res) => {
 const deleteAnswerByUser = async (req, res) => {
   const { questionId, userId } = req.params; // Ensure these are extracted from req.params
 
-  console.log("Deleting answer for:");
-  console.log("UserId:", userId);
-  console.log("QuestionId:", questionId);
+  // console.log("Deleting answer for:");
+  // console.log("UserId:", userId);
+  // console.log("QuestionId:", questionId);
 
   try {
     const [result] = await dbPromise.query(
